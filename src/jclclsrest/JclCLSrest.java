@@ -4,89 +4,201 @@
  * and open the template in the editor.
  */
 package jclclsrest;
+
 import java.net.*;
 import java.io.*;
 import java.util.List;
 import com.google.gson.*;
 import java.util.ListIterator;
 
-class ClsRestDbgObj{
+
+class ClsRestDbgObj {
     public boolean parseOK;
     public List<String> traceMsgQ;
     public List<String> restAPIkeys;
     public String request_uri;
     public String query_string;
     
-    private static final String CRLF = "\r\n";
     
     @Override
     public String toString(){
         String s;
         
-        s = "\tparseOK: " + parseOK + CRLF +
-            "\trequest_uri: " + request_uri + CRLF +
-            "\tquery_string: " + query_string + CRLF +
-            "\trestAPIkeys: " + restAPIkeys + CRLF +
-            "\ttraceMsgQ: " + traceMsgQ + CRLF;
+        s = "\tparseOK: " + parseOK + Consts.NEW_LINE +
+            "\trequest_uri: " + request_uri + Consts.NEW_LINE +
+            "\tquery_string: " + query_string + Consts.NEW_LINE +
+            "\trestAPIkeys: " + restAPIkeys + Consts.NEW_LINE +
+            "\ttraceMsgQ: " + traceMsgQ + Consts.NEW_LINE;
         
         return s;
     }
 }
 
-class ClsRestApiVer{
+class ClsRestApiVer {
     public String apiName;
     public String apiVersion;
     public String apiDataVersion;
 
-    private static final String CRLF = "\r\n";
     
     @Override
     public String toString(){
         String s;
         
-        s = "\tapiName: " + apiName + CRLF +
-            "\tapiVersion: " + apiVersion + CRLF +
-            "\tapiDataVersion: " + apiDataVersion + CRLF;
+        s = "\tapiName: " + apiName + Consts.NEW_LINE +
+            "\tapiVersion: " + apiVersion + Consts.NEW_LINE +
+            "\tapiDataVersion: " + apiDataVersion + Consts.NEW_LINE;
         
         return s;
     }
 }
 
-class ClsRestApiObjVersions{
+class ClsRestApiVersionsObj {
     public int  numApis;
     public List<ClsRestApiVer> apiList;
-
-    private static final String CRLF = "\r\n";
     
     @Override
     public String toString(){
         String s;
         
-        s = "\tnumApis: " + numApis + CRLF +
-            "\tapiList: " + apiList + CRLF;
+        s = "apiObj:" + Consts.NEW_LINE +
+            "\tnumApis: " + numApis + Consts.NEW_LINE +
+            "\tapiList: " + apiList + Consts.NEW_LINE;
         
         return s;
     }
 }
 
-class ClsRestApi{
+class ClsRestApiReelsObj {
+    public int  numReels;
+    
+    @Override
+    public String toString(){
+        String s;
+        
+        s = "apiObj:" + Consts.NEW_LINE +
+            "\tnumReels: " + numReels + Consts.NEW_LINE;
+        
+        return s;
+    }
+}
+
+class ClsRestApiOurWorkObj {
+    public int  numVideos;
+    
+    @Override
+    public String toString(){
+        String s;
+        
+        s = "apiObj:" + Consts.NEW_LINE +
+            "\tnumVideos: " + numVideos + Consts.NEW_LINE;
+        
+        return s;
+    }
+}
+
+class ClsRestApiAboutUsObj {
+    public String  aboutus;
+    
+    @Override
+    public String toString(){
+        String s;
+        
+        s = "apiObj:" + Consts.NEW_LINE +
+            "\taboutUs: " + aboutus + Consts.NEW_LINE;
+        
+        return s;
+    }
+}
+
+class ClsRestApiContactInfoObj {
+    public String  location;
+    
+    @Override
+    public String toString(){
+        String s;
+        
+        s = "apiObj:" + Consts.NEW_LINE +
+            "\tLocation: " + location + Consts.NEW_LINE;
+        
+        return s;
+    }
+}
+
+class ClsRestApiBase {
     public ClsRestDbgObj dbgObj;
     public ClsRestApiVer apiVer;
-    public ClsRestApiObjVersions apiObj;
-
-    private static final String CRLF = "\r\n";
     
     @Override
     public String toString(){
         String s;
         
-        s = "dbgObj:\r\n"+dbgObj.toString() + CRLF + 
-            "apiVer:\r\n"+apiVer.toString() + CRLF + 
-            "apiObj:\r\n"+apiObj.toString();
+        s = "dbgObj:" + Consts.NEW_LINE + dbgObj.toString() + Consts.NEW_LINE + 
+            "apiVer:" + Consts.NEW_LINE + apiVer.toString() + Consts.NEW_LINE;
         
         return s;
     }
 }
+
+class ClsRestApiVersions extends ClsRestApiBase{
+    public ClsRestApiVersionsObj apiObj;
+    @Override
+    public String toString(){
+        String s;
+        
+        s = super.toString() + apiObj.toString();
+        
+        return s;
+    }
+}
+
+class ClsRestApiReels extends ClsRestApiBase{
+    public ClsRestApiReelsObj apiObj;
+    @Override
+    public String toString(){
+        String s;
+        
+        s = super.toString() + apiObj.toString();
+        
+        return s;
+    }
+}
+
+class ClsRestApiOurWork extends ClsRestApiBase{
+    public ClsRestApiOurWorkObj apiObj;
+    @Override
+    public String toString(){
+        String s;
+        
+        s = super.toString() + apiObj.toString();
+        
+        return s;
+    }
+}
+
+class ClsRestApiAboutUs extends ClsRestApiBase{
+    public ClsRestApiAboutUsObj apiObj;
+    @Override
+    public String toString(){
+        String s;
+        
+        s = super.toString() + apiObj.toString();
+        
+        return s;
+    }
+}
+
+class ClsRestApiContactInfo extends ClsRestApiBase{
+    public ClsRestApiContactInfoObj apiObj;
+    @Override
+    public String toString(){
+        String s;
+        
+        s = super.toString() + apiObj.toString();
+        
+        return s;
+    }
+}
+
 /**
  *
  * @author ken
@@ -99,62 +211,97 @@ public class JclCLSrest {
     public static void main(String[] args) {
         clsrest();
     }
-    /*
-    public static void clsrest(){
+    
+    public static String loadJSONfromWebService(String sUrl){
         try{
-            URL url = new URL("http://api.cloudylogic.com/versions/");
+            URL url = new URL(sUrl);
+            
             InputStream is = url.openStream();
-                BufferedReader in = new BufferedReader(
-                       new InputStreamReader(is));
-                    String urlString = "";
-                    String current;
+            /*
+                I think I should have the logic to make sure what I'm reading is
+                content-type:application/json.
+            */
+            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+            String json = "";
+            String current;
 
-                    while((current = in.readLine()) != null) {
-                       urlString += current;
-                    }
-                    //System.out.println(urlString);
-                    
-                    JSONParser parser = new JSONParser();
-
-                    Object obj = parser.parse(urlString);
-
-                    JSONObject jsonObject = (JSONObject) obj;
-                    System.out.println(jsonObject);
-
-                    //String name = (String) jsonObject.get("dbgObj");
-                    System.out.println(jsonObject.get("dbgObj"));
-                    System.out.println(jsonObject.get("apiVer"));
-                    System.out.println(jsonObject.get("apiObj"));
-
-                }catch(IOException e){
-                    e.printStackTrace();
-                }catch(ParseException e){
-                    e.printStackTrace();                
-                }
+            while((current = in.readLine()) != null) {
+               json += current;
+            }
+            return json;
+        }catch(FileNotFoundException e){
+            System.out.println("URL [" + sUrl + "] not available.");
+        }catch(IOException e){
+            //e.printStackTrace();
+        }
+        return "";  // Is this right?
     }
-*/
+    
+    public static void ClsRestVersions(){
+            String json = loadJSONfromWebService("http://api.cloudylogic.com/versions/");
+            Gson gson = new Gson();
+            ClsRestApiVersions versions = new ClsRestApiVersions();
+
+            versions = gson.fromJson(json, versions.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
+            
+            System.out.printf(versions.toString());
+    
+    }
+    
+    public static void ClsRestReels(){
+            String json = loadJSONfromWebService("http://api.cloudylogic.com/reels/");
+            Gson gson = new Gson();
+            ClsRestApiReels reels = new ClsRestApiReels();
+
+            reels = gson.fromJson(json, reels.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
+            
+            System.out.printf(reels.toString());
+    
+    }
+    
+    public static void ClsRestOurWork(){
+            String json = loadJSONfromWebService("http://api.cloudylogic.com/our-work/");
+            Gson gson = new Gson();
+            ClsRestApiOurWork ourWork = new ClsRestApiOurWork();
+
+            ourWork = gson.fromJson(json, ourWork.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
+            
+            System.out.printf(ourWork.toString());
+    
+    }
+
+    public static void ClsRestAboutUs(){
+            String json = loadJSONfromWebService("http://api.cloudylogic.com/about-us/");
+            Gson gson = new Gson();
+            ClsRestApiAboutUs aboutUs = new ClsRestApiAboutUs();
+
+            aboutUs = gson.fromJson(json, aboutUs.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
+            
+            System.out.printf(aboutUs.toString());
+    
+    }
+
+    public static void ClsRestContactInfo(){
+            String json = loadJSONfromWebService("http://api.cloudylogic.com/contact-info/");
+            Gson gson = new Gson();
+            ClsRestApiContactInfo contactInfo = new ClsRestApiContactInfo();
+
+            contactInfo = gson.fromJson(json, contactInfo.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
+            
+            System.out.printf(contactInfo.toString());
+    
+    }
+
     public static void clsrest(){
+            /*
         try{
             URL url = new URL("http://api.cloudylogic.com/versions/");
             
             InputStream is = url.openStream();
             /*
-                what about Object obj = url.getContent();?
-                obj.toString();?
-                or
-                String json = url.getContent().toString();
-                or
-                String json = url.toString()?;
-            
-                //Object json = url.getContent();
-                //System.out.println(json.getClass().getName());
-            
-                This might be used to later deal with the images...
-            
                 I think I should have the logic to make sure what I'm reading is
                 content-type:application/json.
-            
-            */
+            * /
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
             String json = "";
             String current;
@@ -164,17 +311,19 @@ public class JclCLSrest {
             }
             
             Gson gson = new Gson();
-            ClsRestApi versions = new ClsRestApi();
+            ClsRestApiVersions versions = new ClsRestApiVersions();
 
             versions = gson.fromJson(json, versions.getClass());
             
             System.out.printf(versions.toString());
+            */
+            
+            ClsRestVersions();
+            ClsRestReels();
+            ClsRestOurWork();
+            ClsRestAboutUs();
+            ClsRestContactInfo();
             /*
-            System.out.printf("versions.apiVer.apiName: %s\n", versions.apiVer.apiName);
-            System.out.printf("versions.apiVer.apiVersion: %s\n", versions.apiVer.apiVersion);
-            System.out.printf("versions.apiVer.apiDataVersion: %s\n", versions.apiVer.apiDataVersion);
-
-            System.out.printf("versions.apiObj.numApis: %d\n", versions.apiObj.numApis);
 
             int counter = 0;
             for(ListIterator<ClsRestApiVer> iter = versions.apiObj.apiList.listIterator(); iter.hasNext();){
@@ -184,16 +333,13 @@ public class JclCLSrest {
                 System.out.printf("versions.apiObj.apiList[%d].apiDataVersion: %s\n",counter,apiVer.apiDataVersion);
                 counter++;
             }
-            */
 
         }catch(FileNotFoundException e){
             System.out.println("URL not available.");
-            e.printStackTrace();
         }catch(IOException e){
-            e.printStackTrace();
-        //}catch(ParseException e){
-          //  e.printStackTrace();                
+            //e.printStackTrace();
         }
+            */
     }
     
 }
