@@ -6,6 +6,7 @@
 package clsrestapi;
 
 import java.util.List;
+import java.util.ListIterator;
 import jclclsrest.Constants;
 
 /**
@@ -18,13 +19,22 @@ public class ApiObjVersions {
     
     @Override
     public String toString(){
-        String s;
+        StringBuilder sb = new StringBuilder("apiObj:").append(Constants.NL);
         
-        s = "apiObj:" + Constants.NL +
-            "\tnumApis: " + numApis + Constants.NL +
-            "\tapiList: " + apiList + Constants.NL;
+        sb.append("\tnumApis: ").append(numApis).append(Constants.NL);
+        sb.append("\tapiList: ").append(Constants.NL);
         
-        return s;
+        int counter = 0;
+        for(ListIterator<ApiVer> iter = apiList.listIterator(); iter.hasNext();){
+            ApiVer version = iter.next();
+            
+            sb.append("\t\tapiList[").append(counter).append("].apiName: ").append(version.apiName).append(Constants.NL);
+            sb.append("\t\tapiList[").append(counter).append("].apiVersion: ").append(version.apiVersion).append(Constants.NL);
+            sb.append("\t\tapiList[").append(counter).append("].apiDataVersion: ").append(version.apiDataVersion).append(Constants.NL);
+            sb.append(Constants.NL);
+            counter++;
+        }
+        return sb.toString();
     }
     
 }

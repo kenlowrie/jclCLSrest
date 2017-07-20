@@ -15,6 +15,9 @@ import jclclsrest.Constants;
 public class Versions extends Base<Versions>{
     public ApiObjVersions apiObj;
     
+    public Versions(String wsUrl, String apiName){
+        super(wsUrl, apiName);
+    }
 
     public Versions(String wsUrl){
         super(wsUrl, Constants.API_VERSIONS);

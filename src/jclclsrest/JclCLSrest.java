@@ -33,16 +33,28 @@ public class JclCLSrest {
         Versions versions = new Versions().load();
         
         System.out.println(versions);
+
+        versions = new Versions(Constants.WSURL, Constants.API_VERSIONS + "/reels/").load();
+        
+        System.out.println(versions);
     }
     
     public static void ClsRestReels(){
         Reels reels = new Reels().load();
         
         System.out.println(reels);
+
+        reels = new Reels(Constants.WSURL, Constants.API_REELS + "/0/").load();
+        
+        System.out.println(reels);
     }
     
     public static void ClsRestOurWork(){
         OurWork ourWork = new OurWork().load();
+        
+        System.out.println(ourWork);
+        
+        ourWork = new OurWork(Constants.WSURL, Constants.API_OUR_WORK + "/3/").load();
         
         System.out.println(ourWork);
     }
@@ -69,16 +81,6 @@ public class JclCLSrest {
             ClsRestOurWork();
             ClsRestAboutUs();
             ClsRestContactInfo();
-            /*
-            int counter = 0;
-            for(ListIterator<ClsRestApiVer> iter = versions.apiObj.apiList.listIterator(); iter.hasNext();){
-                ClsRestApiVer apiVer = iter.next();
-                System.out.printf("versions.apiObj.apiList[%d].apiName: %s\n",counter,apiVer.apiName);
-                System.out.printf("versions.apiObj.apiList[%d].apiVersion: %s\n",counter,apiVer.apiVersion);
-                System.out.printf("versions.apiObj.apiList[%d].apiDataVersion: %s\n",counter,apiVer.apiDataVersion);
-                counter++;
-            }
-            */
     }
     
 }

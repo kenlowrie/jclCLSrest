@@ -15,6 +15,9 @@ import jclclsrest.Constants;
 public class OurWork extends Base<OurWork>{
     public ApiObjOurWork apiObj;
     
+    public OurWork(String wsUrl, String apiName){
+        super(wsUrl, apiName);
+    }
 
     public OurWork(String wsUrl){
         super(wsUrl, Constants.API_OUR_WORK);

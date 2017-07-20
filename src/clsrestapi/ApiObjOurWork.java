@@ -5,6 +5,8 @@
  */
 package clsrestapi;
 
+import java.util.List;
+import java.util.ListIterator;
 import jclclsrest.Constants;
 
 /**
@@ -13,14 +15,30 @@ import jclclsrest.Constants;
  */
 public class ApiObjOurWork {
     public int  numVideos;
+    public List<ShowCaseVideo> videoList;
     
     @Override
     public String toString(){
-        String s;
+        StringBuilder sb = new StringBuilder("apiObj:").append(Constants.NL);
         
-        s = "apiObj:" + Constants.NL +
-            "\tnumVideos: " + numVideos + Constants.NL;
+        sb.append("\tnumVideos: ").append(numVideos).append(Constants.NL);
+        sb.append("\tvideoList: ").append(Constants.NL);
         
-        return s;
+        int counter = 0;
+        for(ListIterator<ShowCaseVideo> iter = videoList.listIterator(); iter.hasNext();){
+            ShowCaseVideo video = iter.next();
+            
+            sb.append("\t\tvideoList[").append(counter).append("].title: ").append(video.title).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].url: ").append(video.url).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].sUrl: ").append(video.sUrl).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].thumb: ").append(video.thumb).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].frame: ").append(video.frame).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].type: ").append(video.type).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].role: ").append(video.roles).append(Constants.NL);
+            sb.append("\t\tvideoList[").append(counter).append("].description: ").append(video.description).append(Constants.NL);
+            sb.append(Constants.NL);
+            counter++;
+        }
+        return sb.toString();
     }
 }

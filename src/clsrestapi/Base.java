@@ -55,6 +55,7 @@ public abstract class Base<T> {
      * @param apiName The apiName for this object instance. e.g. reels.
      */
     public Base(String wsUrlRoot,String apiName){
+        //TODO is the apiName consistent with Python? Trailing '/'??
         this.apiName = apiName;
         this.webServiceUrl = makeUrl(wsUrlRoot);
     }
@@ -62,6 +63,8 @@ public abstract class Base<T> {
     /**
      * Constructs the web service URL for this instance. The apiName has
      * been filled out in the constructor before this method is invoked.
+     * 
+     * TODO: not liking the apiname override ...
      * 
      * @param wsUrlRoot The web service URL. If no ending '/', it will be added.
      * @return The fully qualified URL for the API.
@@ -72,6 +75,8 @@ public abstract class Base<T> {
         if (!wsUrlRoot.endsWith("/")) s.append('/');
         
         s.append(apiName);
+        
+        if (!apiName.endsWith("/")) s.append('/');
         
         return s.toString();
     }

@@ -15,6 +15,9 @@ import jclclsrest.Constants;
 public class Reels extends Base<Reels>{
     public ApiObjReels apiObj;
     
+    public Reels(String wsUrl, String apiName){
+        super(wsUrl, apiName);
+    }
 
     public Reels(String wsUrl){
         super(wsUrl, Constants.API_REELS);

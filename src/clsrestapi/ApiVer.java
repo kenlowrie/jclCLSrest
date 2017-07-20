@@ -9,13 +9,12 @@ import jclclsrest.Constants;
 
 /**
  *
- * @author ken
+ * @author Ken Lowrie
  */
 public class ApiVer {
     public String apiName;
     public String apiVersion;
     public String apiDataVersion;
-
     
     @Override
     public String toString(){

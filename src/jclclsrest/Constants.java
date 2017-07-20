@@ -6,7 +6,7 @@
 package jclclsrest;
 
 /**
- * The caller references these constants using <tt>Constants.NEW_LINE</tt>.
+ * The caller references these constants using <tt>Constants.WSURL</tt>.
  *
  */
 public class Constants {
