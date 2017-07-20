@@ -25,29 +25,13 @@ public class OurWork extends Base<OurWork>{
 
     @Override
     public OurWork load(){
-        String json = loadJSONfromWebService(webServiceUrl);
+        String json = loadJSONfromWebService();
 
         Gson gson = new Gson();
 
         return gson.fromJson(json, this.getClass());
         
     }
-//    @Override
-//    public boolean parseJSON(String sUrl)
-//    {
-//        String json = loadJSONfromWebService(sUrl);
-//        Gson gson = new Gson();
-//        OurWork tmpVar;// = new AboutUs();
-//
-//        tmpVar = gson.fromJson(json, this.getClass());  // TODO: Is this right? We create a new object then throw it away? Huh?
-//        
-//        this.dbgObj = tmpVar.dbgObj;
-//        this.apiVer = tmpVar.apiVer;
-//        this.apiObj = tmpVar.apiObj;
-//        
-//        System.out.printf(this.toString());
-//        return false;
-//    }
 
     @Override
     public String toString(){

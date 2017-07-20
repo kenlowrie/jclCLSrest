@@ -25,18 +25,55 @@ import jclclsrest.Constants;
 public abstract class Base<T> {
 
     /**
-     *  This variable is set when an object that extends this class is initialized.
+     * This URL is the fully qualified URL for this API instance.
      */
     protected String webServiceUrl;
     
+    /**
+     * This is the String name of the current API instance. 
+     */
     protected String apiName;
 
+    /**
+     * This holds the dbgObj JSON object from a CLS REST API call.
+     */
     public DbgObj dbgObj;
+    
+    /**
+     * This holds the apiVer JSON object from a CLS REST API call.
+     */
     public ApiVer apiVer;
     
+    /**
+     * This is the constructor for the Base class. You pass in the host path
+     * and the apiName, and the fully qualified name is constructed on the fly.
+     * This allows you to override the host path, primarily useful for debugging.
+     * 
+     * @param wsUrlRoot The host name to issue the API call to. Default is
+     * http://api.cloudylogic.com.
+     * 
+     * @param apiName The apiName for this object instance. e.g. reels.
+     */
     public Base(String wsUrlRoot,String apiName){
         this.apiName = apiName;
         this.webServiceUrl = makeUrl(wsUrlRoot);
+    }
+    
+    /**
+     * Constructs the web service URL for this instance. The apiName has
+     * been filled out in the constructor before this method is invoked.
+     * 
+     * @param wsUrlRoot The web service URL. If no ending '/', it will be added.
+     * @return The fully qualified URL for the API.
+     */
+    private String makeUrl(String wsUrlRoot){        
+        StringBuilder s = new StringBuilder(wsUrlRoot);
+        
+        if (!wsUrlRoot.endsWith("/")) s.append('/');
+        
+        s.append(apiName);
+        
+        return s.toString();
     }
     
     /**
@@ -47,9 +84,9 @@ public abstract class Base<T> {
      * @param sUrl String specifying the URL of the web service to invoke.
      * @return String containing the JSON data from the web service.
      */
-    public String loadJSONfromWebService(String sUrl){
+    public String loadJSONfromWebService(){
         try{
-            URL url = new URL(sUrl);
+            URL url = new URL(webServiceUrl);
             
             URLConnection conn = url.openConnection();
             
@@ -69,27 +106,11 @@ public abstract class Base<T> {
             }
             return json;
         }catch(FileNotFoundException e){
-            System.out.println("URL [" + sUrl + "] not available.");
+            System.out.println("URL [" + webServiceUrl + "] not available.");
         }catch(IOException e){
             //e.printStackTrace();
         }
         return "";  // Is this right?
-    }
-    
-    /**
-     * This api constructs the web service URL for the requested API.
-     * 
-     * @param wsUrlRoot The web service URL. If no ending '/', it will be added.
-     * @return The fully qualified URL for the API
-     */
-    private String makeUrl(String wsUrlRoot){        
-        StringBuilder s = new StringBuilder(wsUrlRoot);
-        
-        if (!wsUrlRoot.endsWith("/")) s.append('/');
-        
-        s.append(apiName);
-        
-        return s.toString();
     }
     
     public String getHeader(){
