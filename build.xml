@@ -70,4 +70,26 @@
     nbproject/build-impl.xml file. 
 
     -->
+<target name="-pre-init">
+    <property file="version.properties"/>
+    <property name="dist.jar" value="dist/${ant.project.name}-${project.version}.jar"/>
+</target>
+
+<target description="bundle sources in a jar" name="package-sources">
+    <jar basedir="src" destfile="build/release/${ant.project.name}-${project.version}-sources.jar"/>
+</target>
+
+
+<target name="package_for_release" depends="jar,javadoc, package-sources">
+    <mkdir dir="build/release"/>
+    <copy file="${dist.jar}" todir="build/release/"/>
+    <!--<copy file="LICENSE" todir="build/release/"/>
+    <mkdir dir="build/release/doc"/>
+    <copy todir="build/release/doc">
+        <fileset dir="dist/javadoc" includes="**"/>
+    </copy>-->
+    <zip basedir="dist/javadoc/" includes="**" destfile="build/release/${ant.project.name}-${project.version}-javadoc.zip"/>
+    <zip basedir="build/release/" includes="**" destfile="dist/${ant.project.name}-${project.version}.zip"/>
+</target>
+
 </project>
