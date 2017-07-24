@@ -15,8 +15,6 @@
  */
 package clsrestapi;
 
-import jclclsrest.Constants;
-
 class Roles {
     String director;
     String dp;

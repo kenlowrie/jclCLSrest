@@ -5,8 +5,6 @@
  */
 package clsrestapi;
 
-import jclclsrest.Constants;
-
 /**
  *
  * @author Ken Lowrie

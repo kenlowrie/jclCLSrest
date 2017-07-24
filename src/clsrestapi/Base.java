@@ -8,7 +8,6 @@ package clsrestapi;
 import java.net.*;
 import java.io.*;
 import java.util.Collections;
-import jclclsrest.Constants;
 
 /**
  * This is the base class for the CLS REST API set. Each API contains three
@@ -86,7 +85,6 @@ public abstract class Base<T> {
      * a header of Content-Type == application/json, it will throw an 
      * AssertionError.
      * 
-     * @param sUrl String specifying the URL of the web service to invoke.
      * @return String containing the JSON data from the web service.
      */
     public String loadJSONfromWebService(){

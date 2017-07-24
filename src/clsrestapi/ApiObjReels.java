@@ -7,7 +7,6 @@ package clsrestapi;
 
 import java.util.List;
 import java.util.ListIterator;
-import jclclsrest.Constants;
 
 /**
  * This class encapsulates the 'reels' CLS REST API data.

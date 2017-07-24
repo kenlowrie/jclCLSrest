@@ -5,7 +5,6 @@
  */
 package clsrestapi;
 
-import jclclsrest.Constants;
 import com.google.gson.Gson;
 
 /**

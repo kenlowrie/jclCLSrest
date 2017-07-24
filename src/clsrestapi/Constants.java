@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package jclclsrest;
+package clsrestapi;
 
 /**
  * The caller references these constants using <tt>Constants.WSURL</tt>.

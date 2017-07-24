@@ -9,7 +9,13 @@
  */
 package jclclsrest;
 
-import clsrestapi.*;
+import java.util.HashMap;
+import clsrestapi.AboutUs;
+import clsrestapi.ContactInfo;
+import clsrestapi.Versions;
+import clsrestapi.Reels;
+import clsrestapi.OurWork;
+import clsrestapi.Constants;
 
 
 /**
@@ -23,7 +29,30 @@ public class JclCLSrest {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        clsrest();
+        String host = args.length > 0 ? args[0] : ".";
+        String api = args.length > 1 ? args[1] : "*";
+        
+        //System.out.printf("HOST: %s\n API: %s\n", host, api);
+        
+        HashMap<String, Runnable> tests = new HashMap<>();
+        
+        tests.put(Constants.API_REELS, JclCLSrest::ClsRestReels);
+        tests.put(Constants.API_ABOUT_US, JclCLSrest::ClsRestAboutUs);
+        tests.put(Constants.API_VERSIONS, JclCLSrest::ClsRestVersions);
+        tests.put(Constants.API_OUR_WORK, JclCLSrest::ClsRestOurWork);
+        tests.put(Constants.API_CONTACT_INFO, JclCLSrest::ClsRestContactInfo);
+        
+        //tests.get("reels").run();
+        
+        if (api.equals("*")){
+            System.out.println("Running ALL CLS REST API tests");
+        } else if ( tests.keySet().contains(api)){
+            System.out.println("Running "+api+" CLS REST API only");
+            
+            tests.get(api).run();
+        }
+            
+        //clsrest();
     }
     
     /**

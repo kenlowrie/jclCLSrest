@@ -3,7 +3,6 @@
 package clsrestapi;
 
 import java.util.List;
-import jclclsrest.Constants;
 
 /**
  * This class implements the JSON dbgObj element for Java Clients.
