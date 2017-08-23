@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2017 Ken Lowrie.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package clsrestapi;
 
@@ -115,7 +125,15 @@ public abstract class Base<T> implements Serializable{
         }
         return "";  // Is this right?
     }
-    
+    /**
+     * This method returns a string heading used by the derived class in
+     * the toString() override. Basically just a dashed line, the name of
+     * the API, and another dashed line, making it easy to delineate the
+     * various API calls being made. TODO: Might want to make this optional,
+     * in case users of toString() want to do their own formatting...
+     * 
+     * @return String heading separator.
+     */
     public String getHeader(){
         String dashes = String.join("", Collections.nCopies(40, "-"));
 
@@ -131,6 +149,12 @@ public abstract class Base<T> implements Serializable{
         return s.toString();
     }
     
+    /**
+     * This method serializes an object instance to the specified disk file.
+     * @param filename is the name of the file to write to. It is overwritten
+     * if it already exists.
+     * @return boolean indicating whether the serialization was successful.
+     */
     public boolean serialize(String filename){
         // save the object to file
         FileOutputStream fos;
@@ -147,6 +171,13 @@ public abstract class Base<T> implements Serializable{
         return true;
     }
     
+    /**
+     * This method de-serializes an object instance from the specified disk file.
+     * The type of object returned is the type of the instance that it is invoked
+     * from.
+     * @param filename is the name of the file to read from.
+     * @return T instance
+     */
     public T deSerialize(String filename){
         T obj;
         // save the object to file
@@ -164,6 +195,17 @@ public abstract class Base<T> implements Serializable{
         return obj;
     }
     
+    /**
+     * This method uses the serialize() and deSerialize() methods of the class
+     * to write and then read back the current objects instance data to/from
+     * disk. The contents of the newly loaded instance is compared to the 
+     * object that was originally written. Messages are written to the console
+     * to indicate the progress and status of the operation. This method is
+     * meant to be used for testing the underlying code and may go away once
+     * I write the JUnit code for this class.
+     * @param filename the name of the file to write to. If it exists, it is
+     * overwritten.
+     */
     public void dumpAndLoad(String filename){
         System.out.println("Serializing class type " + this.getClass());
         if ( this.serialize(filename) ){
@@ -193,6 +235,10 @@ public abstract class Base<T> implements Serializable{
      */
     public abstract T load();
     
+    /**
+     * Override the built-in toString and properly dump this instance.
+     * @return String containing the dbgObj and apiVer instance data for this object.
+     */
     @Override
     public String toString(){
         String s;

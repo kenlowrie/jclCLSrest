@@ -1,7 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2017 Ken Lowrie.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package clsrestapi;
 
@@ -10,17 +20,40 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * 
- * @author Ken Lowrie
+ * This class implements a US format mailing address. The {@link ContactInfo} class
+ * contains one of these objects.
+ * @author ken
  */
-
 class Address implements Serializable{
+    /**
+     * The name of the entity.
+     */
     public String name;
+    /**
+     * The street address.
+     */
     public String street;
+    /**
+     * The city.
+     */
     public String city;
+    /**
+     * The state.
+     */
     public String state;
+    /**
+     * The zipcode.
+     */
     public String zipcode;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -38,6 +71,10 @@ class Address implements Serializable{
                 state.equals(addr.state) &&
                 zipcode.equals(addr.zipcode);
     }
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("\tAddress:").append(Constants.NL);
@@ -52,13 +89,42 @@ class Address implements Serializable{
     }
 }
 
+/**
+ * This class implements the API specific data of contact-info. The common data is
+ * described in the {@link Base} class, and it consists of an {@link ApiVer} object
+ * and a {@link DbgObj} object.
+ * @author ken
+ */
 public class ApiObjContactInfo implements Serializable {
+    /**
+     * a short description of where the business is located.
+     */
     public String location;
+    /**
+     * US mailing address.
+     */
     public Address address;
+    /**
+     * email address for the business.
+     */
     public String email;
+    /**
+     * phone number for the business.
+     */
     public String phone;
+    /**
+     * a list of the {@link SocialNetwork}'s that the business maintains an identity on.
+     */
     public List<SocialNetwork> socialNetworks;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -77,6 +143,10 @@ public class ApiObjContactInfo implements Serializable {
                 socialNetworks.equals(ci.socialNetworks);
     }
 
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("apiObj:").append(Constants.NL);

@@ -18,16 +18,40 @@ package clsrestapi;
 import java.io.Serializable;
 
 /**
- *
+ * This class implements a video object; basically everything needed to represent a
+ * streaming video.
  * @author Ken Lowrie
  */
 public class Video implements Serializable{
+    /**
+     * the title of the video.
+     */
     public String title;
+    /**
+     * the URL for the video.
+     */
     public String url;
+    /**
+     * the streaming URL for the video.
+     */
     public String sUrl;
+    /**
+     * the thumbnail for the video.
+     */
     public String thumb;
+    /**
+     * the image frame for the video; essentially a larger thumbnail that will be show as a still frame in the player.
+     */
     public String frame;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -46,6 +70,10 @@ public class Video implements Serializable{
                 frame.equals(vi.frame);
     }
 
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
     public String toString(){
         String s;

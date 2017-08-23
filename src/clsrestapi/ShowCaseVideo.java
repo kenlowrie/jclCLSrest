@@ -17,12 +17,37 @@ package clsrestapi;
 
 import java.io.Serializable;
 
+/**
+ * This class implements the roles object, which allows additional properties to be
+ * attached to a video.
+ * @author Ken Lowrie
+ */
 class Roles implements Serializable{
+    /**
+     * the director of the video.
+     */
     String director;
+    /**
+     * the dp or cinematographer of the video.
+     */
     String dp;
+    /**
+     * the camera operator for the video.
+     */
     String camera;
+    /**
+     * the editor for the video.
+     */
     String editor;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -40,6 +65,10 @@ class Roles implements Serializable{
                 editor.equals(ri.editor);
     }
 
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
         public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -53,15 +82,34 @@ class Roles implements Serializable{
     }
 
 }
+
 /**
- *
+ * This class implements a showcase video object; basically everything needed to represent a
+ * streaming video that is used to showcase a business or entity.
  * @author Ken Lowrie
  */
 public class ShowCaseVideo extends Video implements Serializable{
+    /**
+     * the type of video this is. e.g. business profile, music video, etc.
+     */
     public String type;
+    /**
+     * the roles of the various crewmembers on the video.
+     */
     public Roles roles;
+    /**
+     * the long description of the video.
+     */
     public String description;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -78,6 +126,10 @@ public class ShowCaseVideo extends Video implements Serializable{
                 roles.equals(si.roles);
     }
 
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
         public String toString(){
         StringBuilder sb = new StringBuilder();

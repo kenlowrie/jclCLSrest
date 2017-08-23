@@ -18,14 +18,32 @@ package clsrestapi;
 import java.io.Serializable;
 
 /**
- *
+ * This class implements a Social Network object; basically everything needed to represent a
+ * Social Network identity for a business.
  * @author Ken Lowrie
  */
 public class SocialNetwork implements Serializable {
+    /**
+     * the name of the network, e.g. Facebook.
+     */
     public String network;
+    /**
+     * the identity of the business on the network.
+     */
     public String id;
+    /**
+     * the URL for the network.
+     */
     public String url;
     
+    /**
+     * This method tests to see if the passed object is an instance of
+     * this class, and if it is, the object instance data is compared to
+     * the current instance's data to see if they are identical.
+     * @param o object whose instance data should be compared to the current instance.
+     * @return boolean indicating whether or not the passed instance data is
+     * a match to the current instance data.
+     */
     @Override
     public boolean equals(Object o){
         if (o == this) {
@@ -42,6 +60,10 @@ public class SocialNetwork implements Serializable {
                 url.equals(sn.url);
     }
 
+    /**
+     * Converts the current object instance data to a formatted string.
+     * @return the current objects' instance data
+     */
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("\tAddress:").append(Constants.NL);
