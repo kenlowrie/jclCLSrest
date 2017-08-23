@@ -46,13 +46,13 @@ public class JclCLSrest {
         
         if (api.equals("*")){
             System.out.println("Running ALL CLS REST API tests");
+            clsrest();
         } else if ( tests.keySet().contains(api)){
             System.out.println("Running "+api+" CLS REST API only");
             
             tests.get(api).run();
         }
-            
-        //clsrest();
+        
     }
     
     /**
@@ -66,6 +66,8 @@ public class JclCLSrest {
         versions = new Versions(Constants.WSURL, Constants.API_VERSIONS + "/reels/").load();
         
         System.out.println(versions);
+        
+        versions.dumpAndLoad(Constants.API_VERSIONS + ".ser");
     }
     
     public static void ClsRestReels(){
@@ -76,6 +78,8 @@ public class JclCLSrest {
         reels = new Reels(Constants.WSURL, Constants.API_REELS + "/0/").load();
         
         System.out.println(reels);
+
+        reels.dumpAndLoad(Constants.API_REELS + ".ser");
     }
     
     public static void ClsRestOurWork(){
@@ -86,22 +90,24 @@ public class JclCLSrest {
         ourWork = new OurWork(Constants.WSURL, Constants.API_OUR_WORK + "/3/").load();
         
         System.out.println(ourWork);
+
+        ourWork.dumpAndLoad(Constants.API_OUR_WORK + ".ser");        
     }
 
     public static void ClsRestAboutUs(){
         AboutUs aboutus = new AboutUs().load();
         
         System.out.println(aboutus);
+        
+        aboutus.dumpAndLoad(Constants.API_ABOUT_US + ".ser");
     }
 
     public static void ClsRestContactInfo(){
         ContactInfo contactInfo = new ContactInfo().load();
         
         System.out.println(contactInfo);
-//            ContactInfo contactInfo = new ContactInfo();
-//            
-//            if( contactInfo.parseJSON("http://api.cloudylogic.com/contact-info/") )
-//                System.out.printf(contactInfo.toString());
+        
+        contactInfo.dumpAndLoad(Constants.API_CONTACT_INFO + ".ser");
     }
 
     public static void clsrest(){

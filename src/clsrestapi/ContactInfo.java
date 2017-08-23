@@ -23,6 +23,20 @@ public class ContactInfo extends Base<ContactInfo>{
     }
 
     @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ContactInfo)){
+            return false;
+        }
+        
+        ContactInfo ci = (ContactInfo)o;
+        
+        return dbgObj.equals(ci.dbgObj) && apiVer.equals(ci.apiVer) && apiObj.equals(ci.apiObj) ;
+    }
+    
+    @Override
     public ContactInfo load(){
         String json = loadJSONfromWebService();
 
@@ -31,6 +45,7 @@ public class ContactInfo extends Base<ContactInfo>{
         return gson.fromJson(json, this.getClass());
         
     }
+    
 
     @Override
     public String toString(){

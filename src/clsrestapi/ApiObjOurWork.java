@@ -5,6 +5,7 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -12,9 +13,24 @@ import java.util.ListIterator;
  *
  * @author ken
  */
-public class ApiObjOurWork {
+public class ApiObjOurWork implements Serializable{
     public int  numVideos;
     public List<ShowCaseVideo> videoList;
+    
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ApiObjOurWork)){
+            return false;
+        }
+        
+        ApiObjOurWork wi = (ApiObjOurWork)o;
+        
+        return  numVideos == wi.numVideos &&
+                videoList.equals(wi.videoList);
+    }
     
     @Override
     public String toString(){

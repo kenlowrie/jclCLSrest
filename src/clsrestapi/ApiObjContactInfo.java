@@ -5,6 +5,7 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -13,13 +14,30 @@ import java.util.ListIterator;
  * @author Ken Lowrie
  */
 
-class Address{
+class Address implements Serializable{
     public String name;
     public String street;
     public String city;
     public String state;
     public String zipcode;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Address)){
+            return false;
+        }
+        
+        Address addr = (Address)o;
+        
+        return  name.equals(addr.name) &&
+                street.equals(addr.street) &&
+                city.equals(addr.city) &&
+                state.equals(addr.state) &&
+                zipcode.equals(addr.zipcode);
+    }
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("\tAddress:").append(Constants.NL);
@@ -34,13 +52,31 @@ class Address{
     }
 }
 
-public class ApiObjContactInfo {
+public class ApiObjContactInfo implements Serializable {
     public String location;
     public Address address;
     public String email;
     public String phone;
     public List<SocialNetwork> socialNetworks;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ApiObjContactInfo)){
+            return false;
+        }
+        
+        ApiObjContactInfo ci = (ApiObjContactInfo)o;
+        
+        return  location.equals(ci.location) &&
+                address.equals(ci.address) &&
+                email.equals(ci.email) &&
+                phone.equals(ci.phone) &&
+                socialNetworks.equals(ci.socialNetworks);
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("apiObj:").append(Constants.NL);

@@ -5,15 +5,33 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ken Lowrie
  */
-public class ApiVer {
+public class ApiVer implements Serializable{
     public String apiName;
     public String apiVersion;
     public String apiDataVersion;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ApiVer)){
+            return false;
+        }
+        
+        ApiVer ai = (ApiVer)o;
+        
+        return  apiName.equals(ai.apiName) && 
+                apiVersion.equals(ai.apiVersion) && 
+                apiDataVersion.equals(ai.apiDataVersion);
+    }
+
     @Override
     public String toString(){
         String s;

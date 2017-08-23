@@ -21,7 +21,7 @@ import java.util.Collections;
  * @param <T> When this class is extended, you must specify the class of the
  * extender that will be returned by the abstract methods within.
  */
-public abstract class Base<T> {
+public abstract class Base<T> implements Serializable{
 
     /**
      * This URL is the fully qualified URL for this API instance.
@@ -130,10 +130,64 @@ public abstract class Base<T> {
 
         return s.toString();
     }
+    
+    public boolean serialize(String filename){
+        // save the object to file
+        FileOutputStream fos;
+        ObjectOutputStream out;
+        try {
+            fos = new FileOutputStream(filename);
+            out = new ObjectOutputStream(fos);
+            out.writeObject(this);
+
+            out.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true;
+    }
+    
+    public T deSerialize(String filename){
+        T obj;
+        // save the object to file
+        FileInputStream fis;
+        ObjectInputStream in;
+        try {
+            fis = new FileInputStream(filename);
+            in = new ObjectInputStream(fis);
+            obj = (T) in.readObject();
+            in.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            obj = null;
+        }
+        return obj;
+    }
+    
+    public void dumpAndLoad(String filename){
+        System.out.println("Serializing class type " + this.getClass());
+        if ( this.serialize(filename) ){
+            System.out.println("serialization complete...");
+        }
+        System.out.println("deSerializing class type " + this.getClass());
+        T obj2 = this.deSerialize(filename);
+        
+        if ( obj2 != null ){
+            if ( this.equals(obj2) ){
+                System.out.println("deSerialized object type " + this.getClass() + " matches original ...");
+            } else {
+                System.out.println("deSerialized object does NOT match original ...");                
+            }
+        } else {
+            System.out.println("load from disk failed...");
+        }
+
+    }
+    
     /**
      * This is an abstract method for the base class. Consumers of this class
      * are required to override this method with the code to load the object
-     * by initiated the network call and parsing the JSON.
+     * by initiating the network call and parsing the JSON.
      * 
      * @return The type of the class that extends this class.
      */

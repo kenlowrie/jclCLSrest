@@ -6,12 +6,13 @@
 package clsrestapi;
 
 import com.google.gson.Gson;
+import java.io.Serializable;
 
 /**
  *
  * @author ken
  */
-public class Versions extends Base<Versions>{
+public class Versions extends Base<Versions> implements Serializable{
     public ApiObjVersions apiObj;
     
     public Versions(String wsUrl, String apiName){
@@ -26,6 +27,20 @@ public class Versions extends Base<Versions>{
     }
 
     @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Versions)){
+            return false;
+        }
+        
+        Versions vi = (Versions)o;
+        
+        return dbgObj.equals(vi.dbgObj) && apiVer.equals(vi.apiVer) && apiObj.equals(vi.apiObj) ;
+    }
+    
+    @Override
     public Versions load(){
         String json = loadJSONfromWebService();
 
@@ -34,6 +49,7 @@ public class Versions extends Base<Versions>{
         return gson.fromJson(json, this.getClass());
         
     }
+    
 
     @Override
     public String toString(){

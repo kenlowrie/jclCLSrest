@@ -6,12 +6,13 @@
 package clsrestapi;
 
 import com.google.gson.Gson;
+import java.io.Serializable;
 
 /**
  *
  * @author ken
  */
-public class AboutUs extends Base<AboutUs>{
+public class AboutUs extends Base<AboutUs> implements Serializable{
     
     public ApiObjAboutUs apiObj;
 
@@ -33,6 +34,20 @@ public class AboutUs extends Base<AboutUs>{
     }
 
     @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof AboutUs)){
+            return false;
+        }
+        
+        AboutUs au = (AboutUs)o;
+        
+        return dbgObj.equals(au.dbgObj) && apiVer.equals(au.apiVer) && apiObj.equals(au.apiObj) ;
+    }
+    
+    @Override
     public String toString(){
         String s;
         
@@ -40,4 +55,5 @@ public class AboutUs extends Base<AboutUs>{
         
         return s;
     }
+
 }

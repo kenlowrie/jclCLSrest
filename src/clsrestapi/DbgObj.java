@@ -2,6 +2,7 @@
 
 package clsrestapi;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * 
  * @author Ken Lowrie {@code <mailto:ken@klowrie.net>}
  */
-public class DbgObj {
+public class DbgObj implements Serializable{
     /**
      * parseOK indicates whether the server was able to parse the API name and parameters.
      */
@@ -19,6 +20,23 @@ public class DbgObj {
     public String request_uri;
     public String query_string;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof DbgObj)){
+            return false;
+        }
+        
+        DbgObj dbgo = (DbgObj)o;
+        
+        return parseOK == dbgo.parseOK && 
+                request_uri.equals(dbgo.request_uri) && 
+                traceMsgQ.equals(dbgo.traceMsgQ) && 
+                restAPIkeys.equals(dbgo.restAPIkeys) && 
+                query_string.equals(dbgo.query_string);
+    }
     /**
      * Generates a printable version of the dbgObj object.
      * 

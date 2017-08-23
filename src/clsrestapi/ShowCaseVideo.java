@@ -15,12 +15,31 @@
  */
 package clsrestapi;
 
-class Roles {
+import java.io.Serializable;
+
+class Roles implements Serializable{
     String director;
     String dp;
     String camera;
     String editor;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Roles)){
+            return false;
+        }
+        
+        Roles ri = (Roles)o;
+        
+        return  director.equals(ri.director) &&
+                dp.equals(ri.dp) &&
+                camera.equals(ri.camera) &&
+                editor.equals(ri.editor);
+    }
+
     @Override
         public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -38,11 +57,27 @@ class Roles {
  *
  * @author Ken Lowrie
  */
-public class ShowCaseVideo extends Video{
+public class ShowCaseVideo extends Video implements Serializable{
     public String type;
     public Roles roles;
     public String description;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ShowCaseVideo)){
+            return false;
+        }
+        
+        ShowCaseVideo si = (ShowCaseVideo)o;
+        
+        return  type.equals(si.type) &&
+                description.equals(si.description) &&
+                roles.equals(si.roles);
+    }
+
     @Override
         public String toString(){
         StringBuilder sb = new StringBuilder();

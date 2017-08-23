@@ -15,15 +15,33 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ken Lowrie
  */
-public class SocialNetwork {
+public class SocialNetwork implements Serializable {
     public String network;
     public String id;
     public String url;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof SocialNetwork)){
+            return false;
+        }
+        
+        SocialNetwork sn = (SocialNetwork)o;
+        
+        return  network.equals(sn.network) &&
+                id.equals(sn.id) &&
+                url.equals(sn.url);
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("\tAddress:").append(Constants.NL);

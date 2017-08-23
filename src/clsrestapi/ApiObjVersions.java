@@ -5,6 +5,7 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -12,10 +13,25 @@ import java.util.ListIterator;
  *
  * @author ken
  */
-public class ApiObjVersions {
+public class ApiObjVersions implements Serializable{
     public int  numApis;
     public List<ApiVer> apiList;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ApiObjVersions)){
+            return false;
+        }
+        
+        ApiObjVersions vi = (ApiObjVersions)o;
+        
+        return  numApis == vi.numApis &&
+                apiList.equals(vi.apiList);
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder("apiObj:").append(Constants.NL);

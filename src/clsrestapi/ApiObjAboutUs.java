@@ -5,13 +5,30 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ken
  */
-public class ApiObjAboutUs {
+public class ApiObjAboutUs implements Serializable{
     public String  aboutus;
     
+    @Override
+    public boolean equals(Object o){
+        System.out.println("ApiObjAboutUs");
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ApiObjAboutUs)){
+            return false;
+        }
+        
+        ApiObjAboutUs auo = (ApiObjAboutUs)o;
+        
+        return  aboutus.equals(auo.aboutus);
+    }
+
     @Override
     public String toString(){
         String s;

@@ -34,7 +34,21 @@ public class OurWork extends Base<OurWork>{
         return gson.fromJson(json, this.getClass());
         
     }
-
+    
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof OurWork)){
+            return false;
+        }
+        
+        OurWork ow = (OurWork)o;
+        
+        return dbgObj.equals(ow.dbgObj) && apiVer.equals(ow.apiVer) && apiObj.equals(ow.apiObj) ;
+    }
+    
     @Override
     public String toString(){
         String s;

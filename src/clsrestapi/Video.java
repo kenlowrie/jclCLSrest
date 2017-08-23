@@ -15,17 +15,37 @@
  */
 package clsrestapi;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Ken Lowrie
  */
-public class Video {
+public class Video implements Serializable{
     public String title;
     public String url;
     public String sUrl;
     public String thumb;
     public String frame;
     
+    @Override
+    public boolean equals(Object o){
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Video)){
+            return false;
+        }
+        
+        Video vi = (Video)o;
+        
+        return  title.equals(vi.title) &&
+                url.equals(vi.url) &&
+                sUrl.equals(vi.sUrl) &&
+                thumb.equals(vi.thumb) &&
+                frame.equals(vi.frame);
+    }
+
     @Override
     public String toString(){
         String s;
