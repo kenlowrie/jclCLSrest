@@ -188,10 +188,13 @@ public abstract class Base<T> implements Serializable{
             in = new ObjectInputStream(fis);
             obj = (T) in.readObject();
             in.close();
-        } catch (Exception ex) {
+        } catch (InvalidClassException | FileNotFoundException ex){
+            obj = null;
+        } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
             obj = null;
         }
+        //TODO: I need to throw my own exception with messages that make sense...
         return obj;
     }
     
