@@ -156,6 +156,8 @@ public abstract class Base<T> implements Serializable{
      * @return boolean indicating whether the serialization was successful.
      */
     public boolean serialize(String filename){
+        boolean retVal = true;
+        
         // save the object to file
         FileOutputStream fos;
         ObjectOutputStream out;
@@ -165,10 +167,13 @@ public abstract class Base<T> implements Serializable{
             out.writeObject(this);
 
             out.close();
-        } catch (Exception ex) {
+        } catch (FileNotFoundException ex){
+            retVal = false;
+        } catch (IOException ex) {
             ex.printStackTrace();
+            retVal = false;
         }
-        return true;
+        return retVal;
     }
     
     /**
@@ -213,6 +218,8 @@ public abstract class Base<T> implements Serializable{
         System.out.println("Serializing class type " + this.getClass());
         if ( this.serialize(filename) ){
             System.out.println("serialization complete...");
+        } else {
+            System.out.println("write to disk failed...");
         }
         System.out.println("deSerializing class type " + this.getClass());
         T obj2 = this.deSerialize(filename);
