@@ -25,7 +25,7 @@ import java.io.Serializable;
  */
 public class ApiObjAboutUs implements Serializable{
     /**
-     * This String holds the text returned by the about-us API.
+     * Holds the text returned by the about-us API.
      */
     public String  aboutus;
     
@@ -39,7 +39,6 @@ public class ApiObjAboutUs implements Serializable{
      */
     @Override
     public boolean equals(Object o){
-        System.out.println("ApiObjAboutUs");
         if (o == this) {
             return true;
         }
