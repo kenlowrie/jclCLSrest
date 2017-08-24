@@ -34,16 +34,29 @@ import clsrestapi.Constants;
  * @author ken
  */
 public class JclCLSrest {
+    
+    /**
+     * The host that will be used to issue the REST API calls against. By default,
+     * it is http://api.cloudylogic.com, but can be overridden from the comamnd line.
+     */
+    static private String host;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String host = args.length > 0 ? args[0] : ".";
+        host = args.length > 0 ? args[0] : ".";
         String api = args.length > 1 ? args[1] : "*";
         
         //System.out.printf("HOST: %s\n API: %s\n", host, api);
         
+        /**
+         * If the host field is ".", set it to the default.
+         */
+        if (host.equals(".")){
+            host = Constants.WSURL;
+        }
+                
         HashMap<String, Runnable> tests = new HashMap<>();
         
         tests.put(Constants.API_REELS, JclCLSrest::ClsRestReels);
@@ -51,14 +64,12 @@ public class JclCLSrest {
         tests.put(Constants.API_VERSIONS, JclCLSrest::ClsRestVersions);
         tests.put(Constants.API_OUR_WORK, JclCLSrest::ClsRestOurWork);
         tests.put(Constants.API_CONTACT_INFO, JclCLSrest::ClsRestContactInfo);
-        
-        //tests.get("reels").run();
-        
+                
         if (api.equals("*")){
-            System.out.println("Running ALL CLS REST API tests");
+            System.out.println("Running ALL CLS REST API tests on " + host);
             clsrest();
         } else if ( tests.keySet().contains(api)){
-            System.out.println("Running "+api+" CLS REST API only");
+            System.out.println("Running " + host + "/" + api + "/ CLS REST API");
             
             tests.get(api).run();
         } else{
@@ -71,57 +82,74 @@ public class JclCLSrest {
      * This method tests the <em>versions</em> CLS REST API.
      */
     public static void ClsRestVersions(){
-        Versions versions = new Versions().load();
+        Versions versions = new Versions(host).load();
         
         System.out.println(versions);
-
-        versions = new Versions(Constants.WSURL, Constants.API_VERSIONS + "/reels/").load();
+        
+        versions = new Versions(host, Constants.API_VERSIONS + "/reels/").load();
         
         System.out.println(versions);
         
         versions.dumpAndLoad(Constants.API_VERSIONS + ".ser");
     }
     
+    /**
+     * This method tests the <em>reels</em> CLS REST API.
+     */
     public static void ClsRestReels(){
-        Reels reels = new Reels().load();
+        Reels reels = new Reels(host).load();
         
         System.out.println(reels);
 
-        reels = new Reels(Constants.WSURL, Constants.API_REELS + "/0/").load();
+        reels = new Reels(host, Constants.API_REELS + "/0/").load();
         
         System.out.println(reels);
 
         reels.dumpAndLoad(Constants.API_REELS + ".ser");
     }
     
+    /**
+     * This method tests the <em>our-work</em> CLS REST API.
+     */
     public static void ClsRestOurWork(){
-        OurWork ourWork = new OurWork().load();
+        OurWork ourWork = new OurWork(host).load();
         
         System.out.println(ourWork);
         
-        ourWork = new OurWork(Constants.WSURL, Constants.API_OUR_WORK + "/3/").load();
+        ourWork = new OurWork(host, Constants.API_OUR_WORK + "/3/").load();
         
         System.out.println(ourWork);
 
         ourWork.dumpAndLoad(Constants.API_OUR_WORK + ".ser");        
     }
 
+    /**
+     * This method tests the <em>about-us</em> CLS REST API.
+     */
     public static void ClsRestAboutUs(){
-        AboutUs aboutus = new AboutUs().load();
+        AboutUs aboutus = new AboutUs(host).load();
         
         System.out.println(aboutus);
         
         aboutus.dumpAndLoad(Constants.API_ABOUT_US + ".ser");
     }
 
+    /**
+     * This method tests the <em>contact-info</em> CLS REST API.
+     */
     public static void ClsRestContactInfo(){
-        ContactInfo contactInfo = new ContactInfo().load();
+        ContactInfo contactInfo = new ContactInfo(host).load();
         
         System.out.println(contactInfo);
         
         contactInfo.dumpAndLoad(Constants.API_CONTACT_INFO + ".ser");
+        
+        System.out.println("zipcode is: " + contactInfo.apiObj.address.zipcode);
     }
 
+    /**
+     * This method tests <em>ALL</em> of the CLS REST API's.
+     */
     public static void clsrest(){
             ClsRestVersions();
             ClsRestReels();
