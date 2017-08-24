@@ -39,6 +39,18 @@ public class ApiVer implements Serializable{
     public String apiDataVersion;
     
     /**
+     * Construct an ApiVer object
+     * @param apiName The name of the API
+     * @param apiVersion The version of the API
+     * @param apiDataVersion The version of the data returned by the API
+     */
+    public ApiVer (String apiName, String apiVersion, String apiDataVersion){
+        this.apiName = apiName;
+        this.apiVersion = apiVersion;
+        this.apiDataVersion = apiDataVersion;
+    }
+    
+    /**
      * Overrides the equals() method and compares the passed object's instance
      * data against the instance data of the current object. If it is identical,
      * returns true.
