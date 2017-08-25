@@ -33,18 +33,22 @@ public class AboutUsTest {
     
     @BeforeClass
     public static void setUpClass() {
+        //System.out.println("setUpClass");
     }
     
     @AfterClass
     public static void tearDownClass() {
+        //System.out.println("tearDownClass");
     }
     
     @Before
     public void setUp() {
+        //System.out.println("setUp");
     }
     
     @After
     public void tearDown() {
+        //System.out.println("tearDown");
     }
 
     /**
@@ -52,11 +56,9 @@ public class AboutUsTest {
      */
     @Test
     public void testLoad() {
-        System.out.println("load");
+        System.out.println("AboutUs.testLoad");
         AboutUs instance = new AboutUs();
-        AboutUs expResult = null;
         AboutUs result = instance.load();
-        //assertEquals(expResult, result);
         assert(result instanceof AboutUs);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -67,7 +69,7 @@ public class AboutUsTest {
      */
     @Test
     public void testEquals() {
-        System.out.println("equals");
+        System.out.println("AboutUs.testEquals");
         Object o = null;
         AboutUs instance1 = new AboutUs().load();
         AboutUs instance2 = new AboutUs(Constants.WSURL).load();
@@ -84,7 +86,7 @@ public class AboutUsTest {
      */
     @Test
     public void testToString() {
-        System.out.println("toString");
+        System.out.println("AboutUs.testToString");
         AboutUs instance = new AboutUs().load();
         String expResult = "";
         String result = instance.toString();
@@ -96,16 +98,19 @@ public class AboutUsTest {
     
     @Test
     public void testMiscCrap() {
-        System.out.println("miscCrap");
+        System.out.println("AboutUs.testMiscCrap");
         AboutUs instance = new AboutUs().load();
+        
+        System.out.println("AboutUs.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_ABOUT_US);
+
+        System.out.println("AboutUs.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_ABOUT_US);
+
+        System.out.println("AboutUs.testMiscCrap : checkApiObjInstanceData");
         String expResult = "";
         assert(instance.apiObj.aboutus.startsWith("Although Cloudy Logic")); 
         
-        ApiVer apiVer = new ApiVer(Constants.API_ABOUT_US, "1.0", "1.0");
-        
-        assert(apiVer.equals(instance.apiVer));
-        
-        assert(instance.dbgObj.parseOK);
     }
     
 }
