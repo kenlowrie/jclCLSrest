@@ -156,17 +156,3 @@ public class AboutUsTest {
     }
     
 }
-
-/*        System.out.println("deSerializing class type " + this.getClass());
-        T obj2 = this.deSerialize(filename);
-        
-        if ( obj2 != null ){
-            if ( this.equals(obj2) ){
-                System.out.println("deSerialized object type " + this.getClass() + " matches original ...");
-            } else {
-                System.out.println("deSerialized object does NOT match original ...");                
-            }
-        } else {
-            System.out.println("load from disk failed...");
-        }
-*/
