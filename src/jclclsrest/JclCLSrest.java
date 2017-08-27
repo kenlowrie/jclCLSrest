@@ -40,6 +40,10 @@ public class JclCLSrest {
      * it is http://api.cloudylogic.com, but can be overridden from the comamnd line.
      */
     static private String host;
+    
+    static void logMsg(String msg){
+        System.out.println(msg);
+    }
 
     /**
      * @param args the command line arguments
@@ -66,14 +70,14 @@ public class JclCLSrest {
         tests.put(Constants.API_CONTACT_INFO, JclCLSrest::ClsRestContactInfo);
                 
         if (api.equals("*")){
-            System.out.println("Running ALL CLS REST API tests on " + host);
+            logMsg("Running ALL CLS REST API tests on " + host);
             clsrest();
         } else if ( tests.keySet().contains(api)){
-            System.out.println("Running " + host + "/" + api + "/ CLS REST API");
+            logMsg("Running " + host + "/" + api + "/ CLS REST API");
             
             tests.get(api).run();
         } else{
-            System.out.println("I don't know what [" + api +"] is. Ignoring...");
+            logMsg("I don't know what [" + api +"] is. Ignoring...");
         }
         
     }
@@ -84,13 +88,18 @@ public class JclCLSrest {
     public static void ClsRestVersions(){
         Versions versions = new Versions(host).load();
         
-        System.out.println(versions);
+        if (versions != null){
         
-        versions = new Versions(host, Constants.API_VERSIONS + "/reels/").load();
+            System.out.println(versions);
         
-        System.out.println(versions);
+            versions = new Versions(host, Constants.API_VERSIONS + "/reels/").load();
         
-        versions.dumpAndLoad(Constants.API_VERSIONS + ".ser");
+            System.out.println(versions);
+        
+            versions.dumpAndLoad(Constants.API_VERSIONS + ".ser");
+        } else {
+            logMsg("failed creating instance of Versions class");
+        }
     }
     
     /**
@@ -99,13 +108,18 @@ public class JclCLSrest {
     public static void ClsRestReels(){
         Reels reels = new Reels(host).load();
         
-        System.out.println(reels);
-
-        reels = new Reels(host, Constants.API_REELS + "/0/").load();
+        if( reels != null ){
         
-        System.out.println(reels);
+            System.out.println(reels);
 
-        reels.dumpAndLoad(Constants.API_REELS + ".ser");
+            reels = new Reels(host, Constants.API_REELS + "/0/").load();
+        
+            System.out.println(reels);
+
+            reels.dumpAndLoad(Constants.API_REELS + ".ser");
+        } else {
+            logMsg("failed creating instance of Reels class");
+        }
     }
     
     /**
@@ -114,13 +128,18 @@ public class JclCLSrest {
     public static void ClsRestOurWork(){
         OurWork ourWork = new OurWork(host).load();
         
-        System.out.println(ourWork);
+        if( ourWork != null){
         
-        ourWork = new OurWork(host, Constants.API_OUR_WORK + "/3/").load();
+           System.out.println(ourWork);
         
-        System.out.println(ourWork);
+            ourWork = new OurWork(host, Constants.API_OUR_WORK + "/3/").load();
+        
+            System.out.println(ourWork);
 
-        ourWork.dumpAndLoad(Constants.API_OUR_WORK + ".ser");        
+            ourWork.dumpAndLoad(Constants.API_OUR_WORK + ".ser"); 
+        } else {
+            logMsg("failed creating instance of OurWork class");
+        }
     }
 
     /**
@@ -129,9 +148,11 @@ public class JclCLSrest {
     public static void ClsRestAboutUs(){
         AboutUs aboutus = new AboutUs(host).load();
         
-        System.out.println(aboutus);
-        
-        aboutus.dumpAndLoad(Constants.API_ABOUT_US + ".ser");
+        if (aboutus != null){
+            logMsg(aboutus.toString());        
+        } else {
+            logMsg("failed creating instance of AboutUs class");
+        }
     }
 
     /**
@@ -140,11 +161,17 @@ public class JclCLSrest {
     public static void ClsRestContactInfo(){
         ContactInfo contactInfo = new ContactInfo(host).load();
         
-        System.out.println(contactInfo);
+        if (contactInfo != null){
         
-        contactInfo.dumpAndLoad(Constants.API_CONTACT_INFO + ".ser");
+            System.out.println(contactInfo);
         
-        System.out.println("zipcode is: " + contactInfo.apiObj.address.zipcode);
+            contactInfo.dumpAndLoad(Constants.API_CONTACT_INFO + ".ser");
+        
+            System.out.println("zipcode is: " + contactInfo.apiObj.address.zipcode);
+        } else {
+            logMsg("failed creating instance of ContactInfo class");
+        }
+
     }
 
     /**
