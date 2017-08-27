@@ -64,7 +64,6 @@ public abstract class Base<T> implements Serializable{
      * @param apiName The apiName for this object instance. e.g. reels.
      */
     public Base(String wsUrlRoot,String apiName){
-        //TODO is the apiName consistent with Python? Trailing '/'??
         this.apiName = apiName;
         this.webServiceUrl = makeUrl(wsUrlRoot);
     }
@@ -97,15 +96,14 @@ public abstract class Base<T> implements Serializable{
      * 
      * @return String containing the JSON data from the web service.
      */
-    public String loadJSONfromWebService(){
+    public String loadJSONfromWebService() throws CRAException {
         try{
             URL url = new URL(webServiceUrl);
             
             URLConnection conn = url.openConnection();
             
-            //TODO: Should I be more specific with this assertion?
             if(!"application/json".equals(conn.getHeaderField("Content-Type"))){
-                throw new AssertionError();
+                throw new CRAException("Wrong Content-Type");
             }
         
             InputStream is = url.openStream();
@@ -118,12 +116,10 @@ public abstract class Base<T> implements Serializable{
                json += current;
             }
             return json;
-        }catch(FileNotFoundException e){
-            System.out.println("URL [" + webServiceUrl + "] not available.");
         }catch(IOException e){
-            //e.printStackTrace();
+            // Catch the exception thrown by url.openStream() and translate it
         }
-        return "";  // Is this right?
+        throw new CRAException("URL [" + webServiceUrl + "] not available.");
     }
     /**
      * This method returns a string heading used by the derived class in
@@ -155,7 +151,7 @@ public abstract class Base<T> implements Serializable{
      * if it already exists.
      * @return boolean indicating whether the serialization was successful.
      */
-    public boolean serialize(String filename){
+    public boolean serialize(String filename) throws CRAException {
         boolean retVal = true;
         
         // save the object to file
@@ -168,10 +164,9 @@ public abstract class Base<T> implements Serializable{
 
             out.close();
         } catch (FileNotFoundException ex){
-            retVal = false;
+            throw new CRAException("File or Directory does not exist.");
         } catch (IOException ex) {
-            ex.printStackTrace();
-            retVal = false;
+            throw new CRAException("IO error writing to serialization file.");
         }
         return retVal;
     }
@@ -183,7 +178,7 @@ public abstract class Base<T> implements Serializable{
      * @param filename is the name of the file to read from.
      * @return T instance
      */
-    public T deSerialize(String filename){
+    public T deSerialize(String filename) throws CRAException {
         T obj;
         // save the object to file
         FileInputStream fis;
@@ -194,12 +189,10 @@ public abstract class Base<T> implements Serializable{
             obj = (T) in.readObject();
             in.close();
         } catch (InvalidClassException | FileNotFoundException ex){
-            obj = null;
+            throw new CRAException(ex.getMessage());
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-            obj = null;
+            throw new CRAException(ex.getMessage());
         }
-        //TODO: I need to throw my own exception with messages that make sense...
         return obj;
     }
     
@@ -216,24 +209,24 @@ public abstract class Base<T> implements Serializable{
      */
     public void dumpAndLoad(String filename){
         System.out.println("Serializing class type " + this.getClass());
-        if ( this.serialize(filename) ){
-            System.out.println("serialization complete...");
-        } else {
-            System.out.println("write to disk failed...");
+        try {
+            if ( this.serialize(filename) ){
+                System.out.println("serialization complete...");
+            }
+        } catch (CRAException e) {
+            System.out.println("write to disk failed: " + e.getMessage());            
         }
         System.out.println("deSerializing class type " + this.getClass());
-        T obj2 = this.deSerialize(filename);
-        
-        if ( obj2 != null ){
+        try {
+            T obj2 = this.deSerialize(filename);
             if ( this.equals(obj2) ){
                 System.out.println("deSerialized object type " + this.getClass() + " matches original ...");
             } else {
                 System.out.println("deSerialized object does NOT match original ...");                
             }
-        } else {
-            System.out.println("load from disk failed...");
+        } catch (CRAException e){
+            System.out.println("read from disk failed: " + e.getMessage());
         }
-
     }
     
     /**
