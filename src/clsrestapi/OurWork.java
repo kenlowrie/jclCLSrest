@@ -70,12 +70,17 @@ public class OurWork extends Base<OurWork>{
      */
     @Override
     public OurWork load(){
-        String json = loadJSONfromWebService();
+        try{
+            String json = loadJSONfromWebService();
 
-        Gson gson = new Gson();
+            Gson gson = new Gson();
 
-        return gson.fromJson(json, this.getClass());
-        
+            return gson.fromJson(json, this.getClass());
+        } catch (CRAException e) {
+            //e.printStackTrace();
+        }
+        // TODO: What other exceptions should I catch here?
+        return null;        
     }
     
     /**
