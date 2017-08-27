@@ -197,39 +197,6 @@ public abstract class Base<T> implements Serializable{
     }
     
     /**
-     * This method uses the serialize() and deSerialize() methods of the class
-     * to write and then read back the current objects instance data to/from
-     * disk. The contents of the newly loaded instance is compared to the 
-     * object that was originally written. Messages are written to the console
-     * to indicate the progress and status of the operation. This method is
-     * meant to be used for testing the underlying code and may go away once
-     * I write the JUnit code for this class.
-     * @param filename the name of the file to write to. If it exists, it is
-     * overwritten.
-     */
-    public void dumpAndLoad(String filename){
-        System.out.println("Serializing class type " + this.getClass());
-        try {
-            if ( this.serialize(filename) ){
-                System.out.println("serialization complete...");
-            }
-        } catch (CRAException e) {
-            System.out.println("write to disk failed: " + e.getMessage());            
-        }
-        System.out.println("deSerializing class type " + this.getClass());
-        try {
-            T obj2 = this.deSerialize(filename);
-            if ( this.equals(obj2) ){
-                System.out.println("deSerialized object type " + this.getClass() + " matches original ...");
-            } else {
-                System.out.println("deSerialized object does NOT match original ...");                
-            }
-        } catch (CRAException e){
-            System.out.println("read from disk failed: " + e.getMessage());
-        }
-    }
-    
-    /**
      * This is an abstract method for the base class. Consumers of this class
      * are required to override this method with the code to load the object
      * by initiating the network call and parsing the JSON.
