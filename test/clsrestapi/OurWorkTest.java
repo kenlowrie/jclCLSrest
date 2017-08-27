@@ -52,12 +52,11 @@ public class OurWorkTest {
     public void testLoad() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         OurWork instance = new OurWork();
         OurWork result = instance.load();
+        assert(instance != null);
         assert(result instanceof OurWork);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -67,15 +66,15 @@ public class OurWorkTest {
     public void testEquals() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
-                OurWork instance1 = new OurWork().load();
+        TestHelpers.logMsg(methodName, "Running ...");
+        OurWork instance1 = new OurWork().load();
         OurWork instance2 = new OurWork(Constants.WSURL).load();
+        assert(instance1 != null);
+        assert(instance2 != null);
         boolean expResult = true;
         boolean result = instance1.equals(instance2);
         assertEquals(expResult, result);
         assert(instance1 != instance2);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -85,23 +84,23 @@ public class OurWorkTest {
     public void testToString() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         OurWork instance = new OurWork().load();
+        assert(instance != null);
         String expResult = "";
         String result = instance.toString();
         assertNotEquals(expResult, result);
         assert(result.startsWith("---"));
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
-    public void testMiscCrap() {
+    public void checkInstanceData() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         
         OurWork instance = new OurWork().load();
+        assert(instance != null);
         
         TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_OUR_WORK);
@@ -125,4 +124,34 @@ public class OurWorkTest {
         TestHelpers.logMsg(methodName, "video[0].title = " + scvideo.title);
         TestHelpers.logMsg(methodName, "video[0].type = " + scvideo.type);
     }    
+    
+    @Test
+    public void testSerialization() {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
+        OurWork instance = new OurWork().load();
+        assert(instance != null);
+        
+        String filename = TestHelpers.tempFile(Constants.API_OUR_WORK);
+        
+        assert(filename != null);
+        
+        TestHelpers.logMsg(methodName, "serializing class type " + instance.getClass());
+        try {
+            instance.serialize(filename);
+        } catch (CRAException e){
+            fail("Exception while serializing object: " + e.getMessage());
+        }
+        
+        TestHelpers.logMsg(methodName, "deSerializing class type " + instance.getClass());
+        
+        try {
+            OurWork obj2 = instance.deSerialize(filename);
+            assert(obj2 != null);
+            assert(instance.equals(obj2));
+        } catch (CRAException e){
+            fail("Exception while deSerializing object: " + e.getMessage());
+        }   
+    }
 }

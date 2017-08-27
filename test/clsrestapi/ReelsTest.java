@@ -52,15 +52,15 @@ public class ReelsTest {
     public void testEquals() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         Reels instance1 = new Reels().load();
         Reels instance2 = new Reels(Constants.WSURL).load();
+        assert(instance1 != null);
+        assert(instance2 != null);
         boolean expResult = true;
         boolean result = instance1.equals(instance2);
         assertEquals(expResult, result);
         assert(instance1 != instance2);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -70,12 +70,11 @@ public class ReelsTest {
     public void testLoad() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         Reels instance = new Reels();
         Reels result = instance.load();
+        assert(instance != null);
         assert(result instanceof Reels);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -85,22 +84,22 @@ public class ReelsTest {
     public void testToString() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         Reels instance = new Reels().load();
+        assert(instance != null);
         String expResult = "";
         String result = instance.toString();
         assertNotEquals(expResult, result);
         assert(result.startsWith("---"));
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
-    public void testMiscCrap() {
+    public void checkInstanceData() {
         String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        TestHelpers.logMsg(methodName, "Starting ...");
+        TestHelpers.logMsg(methodName, "Running ...");
         Reels instance = new Reels().load();
+        assert(instance != null);
         
         TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_REELS);
@@ -119,4 +118,34 @@ public class ReelsTest {
         assert(!reel.title.isEmpty());
         TestHelpers.logMsg(methodName, "reel[0].title = " + reel.title);
     }    
+    
+    @Test
+    public void testSerialization() {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
+        Reels instance = new Reels().load();
+        assert(instance != null);
+        
+        String filename = TestHelpers.tempFile(Constants.API_REELS);
+        
+        assert(filename != null);
+        
+        TestHelpers.logMsg(methodName, "serializing class type " + instance.getClass());
+        try {
+            instance.serialize(filename);
+        } catch (CRAException e){
+            fail("Exception while serializing object: " + e.getMessage());
+        }
+        
+        TestHelpers.logMsg(methodName, "deSerializing class type " + instance.getClass());
+        
+        try {
+            Reels obj2 = instance.deSerialize(filename);
+            assert(obj2 != null);
+            assert(instance.equals(obj2));
+        } catch (CRAException e){
+            fail("Exception while deSerializing object: " + e.getMessage());
+        }   
+    }
 }
