@@ -89,15 +89,12 @@ public class JclCLSrest {
         Versions versions = new Versions(host).load();
         
         if (versions != null){
-        
             System.out.println(versions);
         
             versions = new Versions(host, Constants.API_VERSIONS + "/reels/").load();
         
             System.out.println(versions);
-        
-            versions.dumpAndLoad(Constants.API_VERSIONS + ".ser");
-        } else {
+                } else {
             logMsg("failed creating instance of Versions class");
         }
     }
@@ -108,15 +105,12 @@ public class JclCLSrest {
     public static void ClsRestReels(){
         Reels reels = new Reels(host).load();
         
-        if( reels != null ){
-        
+        if( reels != null ){        
             System.out.println(reels);
 
             reels = new Reels(host, Constants.API_REELS + "/0/").load();
         
             System.out.println(reels);
-
-            reels.dumpAndLoad(Constants.API_REELS + ".ser");
         } else {
             logMsg("failed creating instance of Reels class");
         }
@@ -129,14 +123,11 @@ public class JclCLSrest {
         OurWork ourWork = new OurWork(host).load();
         
         if( ourWork != null){
-        
-           System.out.println(ourWork);
+            System.out.println(ourWork);
         
             ourWork = new OurWork(host, Constants.API_OUR_WORK + "/3/").load();
         
             System.out.println(ourWork);
-
-            ourWork.dumpAndLoad(Constants.API_OUR_WORK + ".ser"); 
         } else {
             logMsg("failed creating instance of OurWork class");
         }
@@ -164,9 +155,7 @@ public class JclCLSrest {
         if (contactInfo != null){
         
             System.out.println(contactInfo);
-        
-            contactInfo.dumpAndLoad(Constants.API_CONTACT_INFO + ".ser");
-        
+                
             System.out.println("zipcode is: " + contactInfo.apiObj.address.zipcode);
         } else {
             logMsg("failed creating instance of ContactInfo class");
