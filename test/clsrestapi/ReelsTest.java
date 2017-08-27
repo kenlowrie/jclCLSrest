@@ -15,8 +15,10 @@
  */
 package clsrestapi;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -24,15 +26,33 @@ import static org.junit.Assert.*;
  */
 public class ReelsTest {
     
+    static String className;
+    
     public ReelsTest() {
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+        className = new Object(){}.getClass().getEnclosingClass().getName();
+        
+        if (className.endsWith("Test")) className = className.substring(0, className.length() - 4);
+        
+        TestHelpers.logStart(className);
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        TestHelpers.logEnd(className);
+    }
+    
     /**
      * Test of equals method, of class Reels.
      */
     @Test
     public void testEquals() {
-        System.out.println("Reels.testEquals");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Reels instance1 = new Reels().load();
         Reels instance2 = new Reels(Constants.WSURL).load();
         boolean expResult = true;
@@ -48,7 +68,9 @@ public class ReelsTest {
      */
     @Test
     public void testLoad() {
-        System.out.println("Reels.testLoad");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Reels instance = new Reels();
         Reels result = instance.load();
         assert(result instanceof Reels);
@@ -61,7 +83,9 @@ public class ReelsTest {
      */
     @Test
     public void testToString() {
-        System.out.println("Reels.testToString");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Reels instance = new Reels().load();
         String expResult = "";
         String result = instance.toString();
@@ -73,17 +97,26 @@ public class ReelsTest {
     
     @Test
     public void testMiscCrap() {
-        System.out.println("Reels.testMiscCrap");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Reels instance = new Reels().load();
         
-        System.out.println("Reels.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_REELS);
 
-        System.out.println("Reels.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiVerInstanceData");
         TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_REELS);
 
-        System.out.println("Reels.testMiscCrap : checkApiObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiObjInstanceData");
         assert(instance.apiObj.numReels == 5);
         assert(instance.apiObj.reelList.get(0) instanceof Video);
+        Video reel = instance.apiObj.reelList.get(0);
+        assert(!reel.frame.isEmpty());
+        assert(!reel.sUrl.isEmpty());
+        assert(!reel.url.isEmpty());
+        assert(!reel.thumb.isEmpty());
+        assert(!reel.title.isEmpty());
+        TestHelpers.logMsg(methodName, "reel[0].title = " + reel.title);
     }    
 }

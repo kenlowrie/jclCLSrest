@@ -15,24 +15,44 @@
  */
 package clsrestapi;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  *
  * @author Ken Lowrie <ken@klowrie.net>
  */
 public class OurWorkTest {
+
+    static String className;
     
     public OurWorkTest() {
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+        className = new Object(){}.getClass().getEnclosingClass().getName();
+        
+        if (className.endsWith("Test")) className = className.substring(0, className.length() - 4);
+        
+        TestHelpers.logStart(className);
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        TestHelpers.logEnd(className);
+    }
+    
     /**
      * Test of load method, of class OurWork.
      */
     @Test
     public void testLoad() {
-        System.out.println("OurWork.testLoad");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         OurWork instance = new OurWork();
         OurWork result = instance.load();
         assert(result instanceof OurWork);
@@ -45,8 +65,10 @@ public class OurWorkTest {
      */
     @Test
     public void testEquals() {
-        System.out.println("OurWork.testEquals");
-        OurWork instance1 = new OurWork().load();
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
+                OurWork instance1 = new OurWork().load();
         OurWork instance2 = new OurWork(Constants.WSURL).load();
         boolean expResult = true;
         boolean result = instance1.equals(instance2);
@@ -61,7 +83,9 @@ public class OurWorkTest {
      */
     @Test
     public void testToString() {
-        System.out.println("OurWork.testToString");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         OurWork instance = new OurWork().load();
         String expResult = "";
         String result = instance.toString();
@@ -73,17 +97,32 @@ public class OurWorkTest {
     
     @Test
     public void testMiscCrap() {
-        System.out.println("OurWork.testMiscCrap");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
+        
         OurWork instance = new OurWork().load();
         
-        System.out.println("OurWork.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_OUR_WORK);
 
-        System.out.println("OurWork.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiVerInstanceData");
         TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_OUR_WORK);
 
-        System.out.println("OurWork.testMiscCrap : checkApiObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiObjInstanceData");
         assert(instance.apiObj.numVideos == 8);
         assert(instance.apiObj.videoList.get(0) instanceof ShowCaseVideo);
+        ShowCaseVideo scvideo = instance.apiObj.videoList.get(0);
+        
+        assert(!scvideo.description.isEmpty());
+        assert(!scvideo.frame.isEmpty());
+        assert(!scvideo.url.isEmpty());
+        assert(!scvideo.sUrl.isEmpty());
+        assert(!scvideo.thumb.isEmpty());
+        assert(!scvideo.title.isEmpty());
+        assert(!scvideo.type.isEmpty());
+        assert(scvideo.roles instanceof Roles);
+        TestHelpers.logMsg(methodName, "video[0].title = " + scvideo.title);
+        TestHelpers.logMsg(methodName, "video[0].type = " + scvideo.type);
     }    
 }
