@@ -15,8 +15,10 @@
  */
 package clsrestapi;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -24,15 +26,33 @@ import static org.junit.Assert.*;
  */
 public class VersionsTest {
     
+    static String className;
+    
     public VersionsTest() {
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+        className = new Object(){}.getClass().getEnclosingClass().getName();
+        
+        if (className.endsWith("Test")) className = className.substring(0, className.length() - 4);
+        
+        TestHelpers.logStart(className);
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        TestHelpers.logEnd(className);
+    }
+    
     /**
      * Test of equals method, of class Versions.
      */
     @Test
     public void testEquals() {
-        System.out.println("Versions.testEquals");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Versions instance1 = new Versions().load();
         Versions instance2 = new Versions(Constants.WSURL).load();
         boolean expResult = true;
@@ -48,7 +68,9 @@ public class VersionsTest {
      */
     @Test
     public void testLoad() {
-        System.out.println("Versions.testLoad");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Versions instance = new Versions();
         Versions result = instance.load();
         assert(result instanceof Versions);
@@ -61,7 +83,9 @@ public class VersionsTest {
      */
     @Test
     public void testToString() {
-        System.out.println("Versions.testToString");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Versions instance = new Versions().load();
         String expResult = "";
         String result = instance.toString();
@@ -73,16 +97,18 @@ public class VersionsTest {
     
     @Test
     public void testMiscCrap() {
-        System.out.println("Versions.testMiscCrap");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         Versions instance = new Versions().load();
         
-        System.out.println("Versions.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_VERSIONS);
 
-        System.out.println("Versions.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiVerInstanceData");
         TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_VERSIONS);
 
-        System.out.println("Versions.testMiscCrap : checkApiObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiObjInstanceData");
         assert(instance.apiObj.numApis == 5);
         assert(instance.apiObj.apiList.get(0) instanceof ApiVer);
     }    

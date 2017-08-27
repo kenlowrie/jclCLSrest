@@ -15,8 +15,10 @@
  */
 package clsrestapi;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 
 /**
  *
@@ -24,15 +26,33 @@ import static org.junit.Assert.*;
  */
 public class ContactInfoTest {
     
+    static String className;
+    
     public ContactInfoTest() {
     }
 
+    @BeforeClass
+    public static void setUpClass() {
+        className = new Object(){}.getClass().getEnclosingClass().getName();
+        
+        if (className.endsWith("Test")) className = className.substring(0, className.length() - 4);
+        
+        TestHelpers.logStart(className);
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        TestHelpers.logEnd(className);
+    }
+    
     /**
      * Test of equals method, of class ContactInfo.
      */
     @Test
     public void testEquals() {
-        System.out.println("ContactInfo.testEquals");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         ContactInfo instance1 = new ContactInfo().load();
         ContactInfo instance2 = new ContactInfo(Constants.WSURL).load();
         boolean expResult = true;
@@ -48,7 +68,9 @@ public class ContactInfoTest {
      */
     @Test
     public void testLoad() {
-        System.out.println("ContactInfo.testLoad");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         ContactInfo instance = new ContactInfo();
         ContactInfo result = instance.load();
         assert(result instanceof ContactInfo);
@@ -61,7 +83,9 @@ public class ContactInfoTest {
      */
     @Test
     public void testToString() {
-        System.out.println("ContactInfo.testToString");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         ContactInfo instance = new ContactInfo().load();
         String expResult = "";
         String result = instance.toString();
@@ -73,17 +97,18 @@ public class ContactInfoTest {
     
     @Test
     public void testMiscCrap() {
-        System.out.println("ContactInfo.testMiscCrap");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Starting ...");
         ContactInfo instance = new ContactInfo().load();
         
-        System.out.println("ContactInfo.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_CONTACT_INFO);
 
-        System.out.println("ContactInfo.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiVerInstanceData");
         TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_CONTACT_INFO);
 
-        System.out.println("ContactInfo.testMiscCrap : checkApiObjInstanceData");
-        String expResult = "";
+        TestHelpers.logMsg(methodName, "checkApiObjInstanceData");
         assert(instance.apiObj.location.startsWith("Cloudy Logic Studios")); 
         assert(instance.apiObj.address instanceof Address);
         assert(instance.apiObj.email.equals("info@cloudylogic.com"));
