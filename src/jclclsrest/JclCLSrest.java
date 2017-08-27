@@ -89,12 +89,12 @@ public class JclCLSrest {
         Versions versions = new Versions(host).load();
         
         if (versions != null){
-            System.out.println(versions);
+            logMsg(versions.toString());
         
             versions = new Versions(host, Constants.API_VERSIONS + "/reels/").load();
         
-            System.out.println(versions);
-                } else {
+            logMsg(versions.toString());
+        } else {
             logMsg("failed creating instance of Versions class");
         }
     }
@@ -106,11 +106,11 @@ public class JclCLSrest {
         Reels reels = new Reels(host).load();
         
         if( reels != null ){        
-            System.out.println(reels);
+            logMsg(reels.toString());
 
             reels = new Reels(host, Constants.API_REELS + "/0/").load();
         
-            System.out.println(reels);
+            logMsg(reels.toString());
         } else {
             logMsg("failed creating instance of Reels class");
         }
@@ -123,11 +123,11 @@ public class JclCLSrest {
         OurWork ourWork = new OurWork(host).load();
         
         if( ourWork != null){
-            System.out.println(ourWork);
+            logMsg(ourWork.toString());
         
             ourWork = new OurWork(host, Constants.API_OUR_WORK + "/3/").load();
         
-            System.out.println(ourWork);
+            logMsg(ourWork.toString());
         } else {
             logMsg("failed creating instance of OurWork class");
         }
@@ -154,9 +154,9 @@ public class JclCLSrest {
         
         if (contactInfo != null){
         
-            System.out.println(contactInfo);
+            logMsg(contactInfo.toString());
                 
-            System.out.println("zipcode is: " + contactInfo.apiObj.address.zipcode);
+            logMsg("zipcode is: " + contactInfo.apiObj.address.zipcode);
         } else {
             logMsg("failed creating instance of ContactInfo class");
         }
