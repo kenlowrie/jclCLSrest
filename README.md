@@ -79,6 +79,10 @@ http://api.cloudylogic.com/reels/0/ - return info on the latest demo reel (0 alw
 
 These are JUNIT v4 tests integrated into the NetBeans project, and are executed like any other JUNIT test inside the NetBeans IDE. Refer to their documentation for more details on that.
 
+#### Javadocs
+
+Talk about the Javadocs and also the package support, and how to integrate the distribution into your project. I should also have a separate download area for the built-java packages, different versions, just mimic how others do this.
+
 ### Summary
 
 That is a basic summary of the Java command line client and class library for the CLS REST API.
