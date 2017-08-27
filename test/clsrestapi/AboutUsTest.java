@@ -15,6 +15,7 @@
  */
 package clsrestapi;
 
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,14 +32,20 @@ public class AboutUsTest {
     public AboutUsTest() {
     }
     
+    static String className;
+    
     @BeforeClass
     public static void setUpClass() {
-        //System.out.println("setUpClass");
+        className = new Object(){}.getClass().getEnclosingClass().getName();
+        
+        if (className.endsWith("Test")) className = className.substring(0, className.length() - 4);
+        
+        TestHelpers.logStart(className);
     }
     
     @AfterClass
     public static void tearDownClass() {
-        //System.out.println("tearDownClass");
+        TestHelpers.logEnd(className);
     }
     
     @Before
@@ -56,12 +63,12 @@ public class AboutUsTest {
      */
     @Test
     public void testLoad() {
-        System.out.println("AboutUs.testLoad");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
         AboutUs instance = new AboutUs();
         AboutUs result = instance.load();
         assert(result instanceof AboutUs);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -69,16 +76,18 @@ public class AboutUsTest {
      */
     @Test
     public void testEquals() {
-        System.out.println("AboutUs.testEquals");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
         Object o = null;
         AboutUs instance1 = new AboutUs().load();
         AboutUs instance2 = new AboutUs(Constants.WSURL).load();
+        assert(instance1 != null);
+        assert(instance2 != null);
         boolean expResult = true;
         boolean result = instance1.equals(instance2);
         assertEquals(expResult, result);
         assert(instance1 != instance2);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     /**
@@ -86,31 +95,78 @@ public class AboutUsTest {
      */
     @Test
     public void testToString() {
-        System.out.println("AboutUs.testToString");
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
         AboutUs instance = new AboutUs().load();
+        assert(instance != null);
         String expResult = "";
         String result = instance.toString();
         assertNotEquals(expResult, result);
         assert(result.startsWith("---"));
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
     @Test
-    public void testMiscCrap() {
-        System.out.println("AboutUs.testMiscCrap");
-        AboutUs instance = new AboutUs().load();
+    public void checkInstanceData() {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
         
-        System.out.println("AboutUs.testMiscCrap : checkDbgObjInstanceData");
+        TestHelpers.logMsg(methodName, "Running ...");
+        AboutUs instance = new AboutUs().load();
+        assert(instance != null);
+        
+        TestHelpers.logMsg(methodName, "checkDbgObjInstanceData");
         TestHelpers.checkDbgObjInstanceData(instance.dbgObj,Constants.API_ABOUT_US);
 
-        System.out.println("AboutUs.testMiscCrap : checkApiVerInstanceData");
+        TestHelpers.logMsg(methodName, "checkApiVerInstanceData");
         TestHelpers.checkApiVerInstanceData(instance.apiVer,Constants.API_ABOUT_US);
 
-        System.out.println("AboutUs.testMiscCrap : checkApiObjInstanceData");
-        String expResult = "";
+        TestHelpers.logMsg(methodName, "checkApiObjInstanceData");
         assert(instance.apiObj.aboutus.startsWith("Although Cloudy Logic")); 
         
     }
     
+    @Test
+    public void testSerialization() {
+        String methodName = new Object(){}.getClass().getEnclosingMethod().getName();
+        
+        TestHelpers.logMsg(methodName, "Running ...");
+        AboutUs instance = new AboutUs().load();
+        assert(instance != null);
+        
+        String filename = TestHelpers.tempFile(Constants.API_ABOUT_US);
+        
+        assert(filename != null);
+        
+        TestHelpers.logMsg(methodName, "serializing class type " + instance.getClass());
+        try {
+            instance.serialize(filename);
+        } catch (CRAException e){
+            fail("Exception while serializing object: " + e.getMessage());
+        }
+        
+        TestHelpers.logMsg(methodName, "deSerializing class type " + instance.getClass());
+        
+        try {
+            AboutUs obj2 = instance.deSerialize(filename);
+            assert(obj2 != null);
+            assert(instance.equals(obj2));
+        } catch (CRAException e){
+            fail("Exception while deSerializing object: " + e.getMessage());
+        }   
+    }
+    
 }
+
+/*        System.out.println("deSerializing class type " + this.getClass());
+        T obj2 = this.deSerialize(filename);
+        
+        if ( obj2 != null ){
+            if ( this.equals(obj2) ){
+                System.out.println("deSerialized object type " + this.getClass() + " matches original ...");
+            } else {
+                System.out.println("deSerialized object does NOT match original ...");                
+            }
+        } else {
+            System.out.println("load from disk failed...");
+        }
+*/
