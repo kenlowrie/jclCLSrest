@@ -23,6 +23,7 @@ import java.util.HashMap;
 import clsrestapi.AboutUs;
 import clsrestapi.ContactInfo;
 import clsrestapi.Versions;
+import clsrestapi.ImagePaths;
 import clsrestapi.Reels;
 import clsrestapi.OurWork;
 import clsrestapi.Constants;
@@ -53,19 +54,13 @@ public class JclCLSrest {
         String api = args.length > 1 ? args[1] : "*";
         
         //System.out.printf("HOST: %s\n API: %s\n", host, api);
-        
-        /**
-         * If the host field is ".", set it to the default.
-         */
-        if (host.equals(".")){
-            host = Constants.WSURL;
-        }
-                
+
         HashMap<String, Runnable> tests = new HashMap<>();
         
         tests.put(Constants.API_REELS, JclCLSrest::ClsRestReels);
         tests.put(Constants.API_ABOUT_US, JclCLSrest::ClsRestAboutUs);
         tests.put(Constants.API_VERSIONS, JclCLSrest::ClsRestVersions);
+        tests.put(Constants.API_IMAGE_PATHS, JclCLSrest::ClsRestImagePaths);
         tests.put(Constants.API_OUR_WORK, JclCLSrest::ClsRestOurWork);
         tests.put(Constants.API_CONTACT_INFO, JclCLSrest::ClsRestContactInfo);
                 
@@ -96,6 +91,23 @@ public class JclCLSrest {
             logMsg(versions.toString());
         } else {
             logMsg("failed creating instance of Versions class");
+        }
+    }
+    
+    /**
+     * This method tests the <em>image-paths</em> CLS REST API.
+     */
+    public static void ClsRestImagePaths(){
+        ImagePaths imagePaths = new ImagePaths(host).load();
+        
+        if (imagePaths != null){
+            logMsg(imagePaths.toString());
+        
+            imagePaths = new ImagePaths(host, Constants.API_IMAGE_PATHS + "/JavaDesktop/").load();
+        
+            logMsg(imagePaths.toString());
+        } else {
+            logMsg("failed creating instance of ImagePaths class");
         }
     }
     
