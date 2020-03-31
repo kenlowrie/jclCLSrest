@@ -5,7 +5,7 @@ Welcome to the Java Command Line client for the CLS REST API. The CLS REST API i
 
 #### Attributions
 
-Attributions go here...
+Attributions go here ...
 
 <a id="install">&nbsp;</a>
 
